@@ -76,7 +76,7 @@ app.use("/", users);
 
 // root
 app.get("/", (req, res) => {
-  res.send("/ root path");
+  res.redirect("/listings");
 });
 
 // 404 handler
