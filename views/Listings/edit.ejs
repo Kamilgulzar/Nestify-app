@@ -1,0 +1,124 @@
+<% layout('/layouts/boilerplate') -%>
+<body>
+  <div class="row mt-3">
+    <div class="col-8 offset-2">
+      <h1>Edit your Listing</h1>
+     <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data">
+        
+  <div class="mb-3">
+    <label for="Title">Title</label>
+    <input
+      name="Listing[title]"
+      value="<%= listing.title %>"
+      type="text"
+      class="form-control"
+      placeholder="enter title"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="description">Description</label>
+    <textarea
+      name="Listing[description]"
+      class="form-control"
+      placeholder="enter description"
+    ><%= listing.description %></textarea>
+  </div>
+
+<div class="mb-3">
+<label for="image">Original Image</label><br>
+<img src="<%= originalimageurl %>" alt="" srcset="">
+</div>
+
+  <div class="mb-3">
+    <label for="image">Image</label>
+    <input
+      name="Listing[image]"
+      type="file"
+      placeholder="enter image URL"
+      class="form-control"
+    />
+  </div>
+
+  <div class="row mt-3">
+    <div class="mb-3 col-md-4">
+      <label for="price">Price</label>
+      <input
+        name="Listing[price]"
+        value="<%= listing.price %>"
+        type="text"
+        placeholder="enter price"
+        class="form-control"
+      />
+    </div>
+
+    <div class="mb-3 col-md-8">
+      <label for="country">Country</label>
+      <input
+        name="Listing[country]"
+        value="<%= listing.country %>"
+        type="text"
+        placeholder="enter country"
+        class="form-control"
+      />
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="Location">Location</label>
+    <input
+      name="Listing[location]"
+      value="<%= listing.location %>"
+      type="text"
+      placeholder="enter location"
+      class="form-control"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Update Location on Map</label>
+    <div id="map" style="height: 400px; width: 100%;" class="mb-3"></div>
+    <input type="hidden" name="Listing[geometry][type]" value="Point">
+    <input type="hidden" name="Listing[geometry][coordinates][0]" id="lng" required>
+    <input type="hidden" name="Listing[geometry][coordinates][1]" id="lat" required>
+  </div>
+
+  <button class="mb-3 edit-btn">Edit Listing</button>
+</form>
+    </div>
+  </div>
+<script id="listing-data" type="application/json">
+    <%- JSON.stringify(listing) %>
+</script>
+<script>
+    const listing = JSON.parse(document.getElementById('listing-data').textContent);
+    // Default to existing coords or Pakistan default
+    let lat = 30.3753;
+    let lng = 69.3451;
+    
+    if (listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) {
+        lng = listing.geometry.coordinates[0];
+        lat = listing.geometry.coordinates[1];
+    }
+
+    document.getElementById('lat').value = lat;
+    document.getElementById('lng').value = lng;
+
+    var map = L.map('map').setView([lat, lng], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker = L.marker([lat, lng]).addTo(map);
+
+    map.on('click', function(e) {
+        var newLat = e.latlng.lat;
+        var newLng = e.latlng.lng;
+
+        marker.setLatLng([newLat, newLng]);
+        
+        document.getElementById('lat').value = newLat;
+        document.getElementById('lng').value = newLng;
+    });
+</script>
+</body>

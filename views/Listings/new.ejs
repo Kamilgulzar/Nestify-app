@@ -1,0 +1,117 @@
+<% layout('/layouts/boilerplate') -%>
+<body>
+  <div class="row mt-3">
+  <div class="col-8 offset-2">
+  <h1 >Create New Listing</h1>
+  <form method="POST" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
+    
+     
+    <div class="mb-3">
+      <label for="form-title">Title</label>
+      <input
+        name="Listing[title]"
+        type="text"
+        placeholder="Title"
+        class="form-control"
+        required
+      />
+        <div class="valid-feedback">
+      Looks good!
+    </div>
+      <div class="invalid-feedback">
+    Please provide a title.
+  </div>
+
+    </div>
+
+    <div class="mb-3">
+      <label for="form-description">Description</label
+      ><textarea
+        name="Listing[description]"
+        id=""
+        class="form-control"
+        placeholder="enter description"
+        required
+      >
+    </textarea>
+    
+      
+    </div>
+  <div class="row">
+    <div class="mb-3 col-md-4">
+      <label for="form-price"></label>Price<input
+        name="Listing[price]"
+        type="text"
+        placeholder="4000"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="mb-3 col-md-8">
+      <label for="form-country">Country</label>
+      <input
+        name="Listing[country]"
+        type="text"
+        placeholder="Pakistan"
+        class="form-control"
+        required
+      />
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="form-image"></label>Image:<input
+        name="Listing[image]"
+        type="file"
+        placeholder="enter image URL"
+        class="form-control"
+      />
+    </div>
+     <div class="mb-3"><label for="Location">Location</label><input name="Listing[location]" placeholder="Karachi, Sindh" type="text" class="form-control" required> </div>
+    
+     <div class="mb-3">
+        <label class="form-label">Choose Location on Map</label>
+        <div id="map" style="height: 400px; width: 100%;" class="mb-3"></div>
+        <input type="hidden" name="Listing[geometry][type]" value="Point">
+        <input type="hidden" name="Listing[geometry][coordinates][0]" id="lng" required>
+        <input type="hidden" name="Listing[geometry][coordinates][1]" id="lat" required>
+    </div>
+    
+    <button class="add-btn">Add</button>
+    </div>
+    </div>
+    <br><br>
+  </form>
+
+<script>
+  var map = L.map('map').setView([30.3753, 69.3451], 5);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  let marker = null;
+
+  // ❌ DO NOT set default coordinates
+  document.getElementById('lat').value = '';
+  document.getElementById('lng').value = '';
+
+  map.on('click', function (e) {
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+
+    if (!marker) {
+      marker = L.marker([lat, lng]).addTo(map);
+    } else {
+      marker.setLatLng([lat, lng]);
+    }
+
+    // ✅ GeoJSON format
+    document.getElementById('lng').value = lng;
+    document.getElementById('lat').value = lat;
+  });
+</script>
+
+
+
+</body>

@@ -1,0 +1,113 @@
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+}
+
+.navbar {
+    margin: 12px !important;
+    background-color: white !important;
+}
+
+.nav-link {
+    font-size: 18px !important;
+    padding-right: 12px !important ;
+    color: black !important;
+}
+
+.navbar-brand {
+    color: red !important;
+    font-size: 25px !important;
+    padding-left: 15px !important;
+}
+
+.f-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-top: 25px !important; */
+    
+}
+
+.card-img-top{
+    width: 100%;
+    height: 200px;       
+    object-fit: cover;   
+    border-radius: 6px 6px 0 0; 
+}
+
+.show-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center; 
+    border-radius: 4px solid black;
+}
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 180px;   /* slightly smaller */
+  }
+}
+
+/* Mobile phones (576px and below) */
+@media (max-width: 576px) {
+  .card-img-top {
+    height: 140px;   /* compact thumbnails on small screens */
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .show-card-img {
+    height: 300px;   /* medium size */
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .show-card-img {
+    height: 200px;   /* compact but still clear */
+  }
+}
+
+.card-img-overlay:hover {
+   background-color: white !important;
+   opacity: 0.1 !important;
+   box-shadow: 2px 2px 4px black !important;
+}
+
+.card:hover{
+    box-shadow: 4px 4px 8px black !important;
+}
+
+.add-btn {
+    background-color: red !important;
+    color: white !important;
+}
+
+.btns {
+    display: flex;
+    position: relative;
+    right: 10em;
+  
+}
+
+.edit-btn {
+     background-color: red;
+     color: white;
+     border: 1px solid black;
+     border-radius: 4px;
+}
+
+
+.delete-btn {
+     background-color: red;
+     color: white;
+     border: 1px solid black;
+     border-radius: 4px;
+}
+
+#map {
+  height: 200px; /* Set map height */
+  width: auto;
+}
