@@ -20,11 +20,11 @@ const users = require("./routes/user.js");
 
 // ------- view + middleware -------
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(process.cwd(), "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", engine);
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(process.cwd(), "public")));
 
 // ========== IMPORTANT CHANGES BELOW ==========
 
