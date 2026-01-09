@@ -102,9 +102,9 @@ app.use((err, req, res, next) => {
 // 👉 export app (Vercel uses this)
 module.exports = app;
 
-// 👉 only listen locally (NOT on Vercel)
 if (require.main === module) {
-  app.listen(PORT, () =>
-    console.log(`Local server running on http://localhost:${PORT}`)
-  );
+  const PORT = process.env.PORT || 8080;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 }
