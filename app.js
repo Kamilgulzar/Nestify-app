@@ -29,10 +29,10 @@ app.use(express.static(path.join(process.cwd(), "public")));
 // -------- MongoDB --------
 const MONGO_URL = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/nestify";
 
-mongoose
-  .connect(MONGO_URL)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("Mongo connection error:", err));
+const connectDB = require("./db");
+
+connectDB(process.env.MONGO_URI);
+
 
 // -------- Session --------
 const sessionOptions = {
