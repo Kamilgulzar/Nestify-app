@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const engine = require("ejs-mate");
@@ -18,21 +17,17 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const users = require("./routes/user.js");
 
-// ------- view + middleware -------
+// -------- DB (serverless safe) --------
+const connectDB = require("./db");
+connectDB(process.env.MONGO_URI);
+
+// -------- view + middleware --------
 app.set("view engine", "ejs");
 app.set("views", path.join(process.cwd(), "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", engine);
 app.use(express.static(path.join(process.cwd(), "public")));
-
-// -------- MongoDB --------
-const MONGO_URL = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/nestify";
-
-const connectDB = require("./db");
-
-connectDB(process.env.MONGO_URI);
-
 
 // -------- Session --------
 const sessionOptions = {
@@ -65,7 +60,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// -------- ROOT FIRST --------
+// -------- ROOT --------
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
@@ -88,7 +83,6 @@ app.use((err, req, res, next) => {
   console.error(
     `ERROR ${status} on ${req.method} ${req.originalUrl} → ${message}`
   );
-  console.error(err.stack);
 
   res.status(status).render("listings/error.ejs", { message });
 });

@@ -10,7 +10,7 @@ async function connectDB(uri) {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(uri).then((mongoose) => mongoose);
+    cached.promise = mongoose.connect(uri).then((m) => m);
   }
 
   cached.conn = await cached.promise;
