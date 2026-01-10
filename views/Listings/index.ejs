@@ -3,7 +3,9 @@
     <h1 class="ps-3 ps-lg-4">All Listings</h1>     
     <div class="row g-4 ps-3 ps-lg-4">     
         <!-- <form method="GET" action="/Listings/new"><button>Create new Listing</button></form> -->     
-        <% for( listing of allListings ) { %>       
+        <% for( listing of listings ) { %>       
+          
+
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-3">
                 <a class="Listing-Link text-decoration-none text-dark" href="/listings/<%=listing._id %>">      
                     <div class="card h-100 shadow-sm border-0"> 
