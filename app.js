@@ -4,6 +4,19 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
+
+// 🔧 DEBUG ROUTES 
+app.get("/ping", (req, res) => {
+  res.send("pong");
+});
+
+app.get("/test-db", async (req, res) => {
+  const Listing = require("./models/listing");
+  const count = await Listing.countDocuments();
+  res.send("Count: " + count);
+});
+
+// -------- imports --------
 const path = require("path");
 const methodOverride = require("method-override");
 const engine = require("ejs-mate");
