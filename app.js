@@ -35,13 +35,17 @@ app.engine("ejs", engine);
 app.use(express.static(path.join(process.cwd(), "public")));
 
 // -------- Session --------
-const store = MongoStore.create({
-  mongoUrl: process.env.MONGO_URI,
-  crypto:{
-    secret: process.env.SESSION_SECRET
-  },
-  touchAfter: 24 * 3600
-})
+const store = MongoStore.default
+  ? MongoStore.default.create({
+      mongoUrl: process.env.MONGO_URI,
+      crypto: { secret: process.env.SESSION_SECRET },
+      touchAfter: 24 * 3600,
+    })
+  : MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      crypto: { secret: process.env.SESSION_SECRET },
+      touchAfter: 24 * 3600,
+    });
 
 store.on("error",e=>{
   console.log("SESSION STORE ERROR",e)
