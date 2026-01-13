@@ -16,7 +16,7 @@ router
   .post(validateListing, upload.single('Listing[image]'), wrapAsync(listingController.createListing));
  
 //New Route
-router.get("/new", isLoggedIn, listingController.renderNewForm);
+router.get("/new", saveRedirectUrl, isLoggedIn, listingController.renderNewForm);
 
 router
   .route("/:id")

@@ -28,7 +28,8 @@ module.exports.renderLoginForm = (req,res)=>{
 
 module.exports.login = async(req,res)=>{
   req.flash("success","Welcome back to Nestify!");
-  const redirectUrl = res.locals.redirectUrl || "/listings"
+  const redirectUrl = req.session.redirectUrl || "/listings"
+  delete req.session.redirectUrl;
   res.redirect(redirectUrl)
 }
 

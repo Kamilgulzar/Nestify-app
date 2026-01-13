@@ -4,7 +4,6 @@ const { ListingSchema ,ReviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
 
 module.exports.isLoggedIn = (req,res,next)=>{
-    req.session.redirectUrl = req.originalUrl;
     if(!req.isAuthenticated()){
         req.flash("error","User must be logged in before performing any task!");
        return res.redirect("/login");
@@ -13,8 +12,8 @@ module.exports.isLoggedIn = (req,res,next)=>{
 }
 
 module.exports.saveRedirectUrl = (req,res,next)=>{
-    if(req.session.redirectUrl){
-        res.locals.redirectUrl = req.session.redirectUrl;
+    if(req.session){
+        req.session.redirectUrl = req.originalUrl;
     }
     next();
 }
