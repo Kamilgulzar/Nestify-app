@@ -20,6 +20,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const users = require("./routes/user.js");
+const MongoStore = require("connect-mongo");
 
 // -------- DB (serverless safe) --------
 const connectDB = require("./db");
@@ -34,8 +35,21 @@ app.engine("ejs", engine);
 app.use(express.static(path.join(process.cwd(), "public")));
 
 // -------- Session --------
+const store = MongoStore.create({
+  mongoUrl: process.env.MONGO_URI,
+  crypto:{
+    secret: process.env.SESSION_SECRET
+  },
+  touchAfter: 24 * 3600
+})
+
+store.on("error",e=>{
+  console.log("SESSION STORE ERROR",e)
+})
+
 const sessionOptions = {
-  secret: process.env.SESSION_SECRET || "devsecret",
+  store,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
