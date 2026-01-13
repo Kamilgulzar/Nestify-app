@@ -5,16 +5,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const app = express();
 
-// 🔧 DEBUG ROUTES 
-app.get("/ping", (req, res) => {
-  res.send("pong");
-});
-
-app.get("/test-db", async (req, res) => {
-  const Listing = require("./models/listing");
-  const count = await Listing.countDocuments();
-  res.send("Count: " + count);
-});
+app.set("trust proxy", 1);
 
 // -------- imports --------
 const path = require("path");
@@ -46,7 +37,7 @@ app.use(express.static(path.join(process.cwd(), "public")));
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "devsecret",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
